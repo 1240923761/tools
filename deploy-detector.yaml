@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bifrost-pro-dev
+  name: detector
+spec:
+  selector:
+    matchLabels:
+      app: detector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: detector
+    spec:
+      containers:
+        - name: detector
+          image: repository.umisen.com:5000/bifrost-pro/build/detector:DETECTOR_VERSION
+          imagePullPolicy: Always
+          command: [ "/app/dist/detector", "-c", "/app/etc/config.dev.json" ]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /available
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/etc
+      #          readinessProbe:
+      #            grpc:
+      #              port: 34000
+      volumes:
+        - name: config-volume
+          projected:
+            sources:
+              - configMap:
+                  name: bifrost-pro-detector-dev-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: bifrost-pro-dev
+  name: detector
+spec:
+  type: ClusterIP
+  ports:
+    - name: detector
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: detector

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="da3bfca9-1cbe-4832-acaf-cdec2c0e1300" name="tz-server">
+        <fileTransfer rootFolder="/home/dev" accessType="SFTP" host="192.168.193.140" port="22" sshConfigId="7701e442-55a9-4da9-b6c0-d7d7d0047a8c" sshConfig="root@192.168.193.140:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="3b6fc48b-e3ee-4285-bf29-2ee1f47a318e" name="K8S">
+        <fileTransfer rootFolder="/deploy" accessType="SFTP" host="10.220.10.43" port="22" sshConfigId="bacf2fce-93fc-43d4-a415-4417694beed1" sshConfig="root@10.220.10.43:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

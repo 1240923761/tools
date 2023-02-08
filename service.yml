@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-tz
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tz-backend-loadbalancer
+  namespace: dev-tz
+spec:
+  externalIPs:
+    - 10.220.10.37
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30123
+  selector:
+    app: tz-backend
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tz-backend
+  namespace: dev-tz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tz-backend
+  template:
+    metadata:
+      labels:
+        app: tz-backend
+    spec:
+      containers:
+        - name: tz-backend
+          image: tz-backend
+          ports:
+            - containerPort: 8080
+
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pg-pv
+spec:
+  capacity:
+    storage: 5Gi
