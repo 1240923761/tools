@@ -1,4 +1,4 @@
-module tools
+module github.com/1240923761/tools
 
 go 1.20
 

@@ -4,10 +4,10 @@ import (
 	"container/heap"
 	"context"
 	"fmt"
+	"github.com/1240923761/tools/common/priority_queue"
 	"sync"
 	"sync/atomic"
 	"time"
-	"tools/common/priority_queue"
 )
 
 type DelayQueue[T any] struct {
